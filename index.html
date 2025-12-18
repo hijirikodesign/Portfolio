@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<!--
+  Template: ORGANIC v1.0
+  Author: Haruki Tominaga
+  License: https://amix-design.com/tominaga/eyan-theme/license 
+  © 2025 EYAN / トミナガハルキ
+-->
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    
+    <title>Portfolio - ORGANIC</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================
+           配色・形状の設定
+           ここを変更するとサイト全体の雰囲気が変わります
+           ========================================= */
+        :root {
+            --bg-color: #f7f3e8;       /* 背景色 */
+            --text-color: #5d574d;     /* 文字色 */
+            --accent-green: #a4b38d;   /* アクセントカラー（緑） */
+            
+            /* 画像の角丸形状（有機的な形） */
+            --card-radius-odd: 24% 76% 28% 72% / 71% 28% 72% 29%;
+            --card-radius-even: 76% 24% 71% 29% / 28% 72% 28% 72%;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Zen Maru Gothic', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* --- ヘッダーエリア --- */
+        header {
+            text-align: center;
+            padding: 4rem 0 4rem; /* 下部余白を少し調整 */
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInHeader 1s ease-out forwards;
+        }
+
+        @keyframes fadeInHeader {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            margin-bottom: 2rem;
+            box-shadow: 10px 10px 0 var(--accent-green);
+            background-color: #e6e6e6;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0 0 1rem 0;
+            color: #4a443a;
+        }
+
+        .role-tag {
+            display: inline-block;
+            background: #fff;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        /* --- 新規追加: フリーテキストエリア --- */
+        .text-section {
+            max-width: 900px; /* 幅を720pxから900pxに拡張 */
+            margin: 0 auto 5rem;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            /* ヘッダーの後にふんわり表示 */
+            animation: fadeInHeader 1s ease-out 0.3s forwards;
+        }
+
+        .text-section h2 {
+            font-size: 1.5rem;
+            color: var(--accent-green);
+            margin-bottom: 2rem;
+            letter-spacing: 0.1em;
+        }
+
+        .text-section p {
+            text-align: left; /* 読みやすさのため左揃え（お好みでcenterに変更可） */
+            display: inline-block; /* 中央配置のためにインラインブロック化 */
+            text-align: justify; /* 両端揃え */
+        }
+
+        /* --- 作品一覧グリッド --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            min-height: 200px;
+        }
+
+        .card {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card:hover { transform: translateY(-5px); }
+
+        .card-img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 20px;
+            display: block;
+            background-color: #f0f0f0;
+        }
+        
+        /* 奇数・偶数番目で形を変える処理 */
+        .card:nth-child(odd) .card-img { border-radius: var(--card-radius-odd); }
+        .card:nth-child(even) .card-img { border-radius: var(--card-radius-even); }
+
+        .card-info { text-align: center; margin-top: 1rem; }
+        .card-title { font-weight: 700; font-size: 1.1rem; }
+        .card-cat { font-size: 0.8rem; color: #8c867b; }
+
+        /* --- フッターエリア --- */
+        footer {
+            margin-top: 8rem;
+            text-align: center;
+            background: #fff;
+            padding: 4rem 2rem;
+            border-radius: 50% 50% 0 0 / 10% 10% 0 0;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .social-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            background: var(--bg-color);
+            transition: 0.3s;
+        }
+        .social-links a:hover { background: var(--accent-green); color: #fff; }
+
+        /* --- モーダル (拡大表示) --- */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(255,255,255,0.95);
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.4s;
+            padding: 1rem;
+        }
+        .modal.active { opacity: 1; visibility: visible; }
+        
+        .modal-content {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-img {
+            max-width: 100%;
+            max-height: 60vh;
+            object-fit: contain;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            cursor: pointer; /* 【修正】クリックできることがわかるように指マークに変更 */
+        }
+
+        .close-btn {
+            margin-top: 1.5rem;
+            background: var(--text-color);
+            color: #fff;
+            border: none;
+            padding: 0.8rem 2.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+        .close-btn:hover { background: var(--accent-green); }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            .card-img { border-radius: 20px !important; }
+            .modal-img { max-height: 50vh; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="image/profile.jpg" alt="Profile" class="profile-img" onerror="this.style.display='none'">
+            
+            <h1 id="user-name"></h1>
+            <span id="user-role" class="role-tag"></span>
+            <p id="user-bio" style="max-width: 600px; margin: 0 auto;"></p>
+        </header>
+
+        <section id="free-text-area" class="text-section">
+            <h2 id="free-text-title"></h2>
+            <p id="free-text-content"></p>
+        </section>
+
+        <section id="gallery-grid" class="gallery-grid"></section>
+
+        <footer>
+            <h3>Contact Me</h3>
+            <div id="links-list" class="social-links"></div>
+            <p style="font-size: 0.8rem; opacity: 0.7;">&copy; <span id="year"></span> <span id="footer-name">Portfolio</span>.</p>
+        </footer>
+    </div>
+
+    <div id="modal" class="modal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <img id="modal-img" class="modal-img" src="" onclick="closeModal()">
+            <h2 id="modal-title" style="margin-top: 1rem;"></h2>
+            <p id="modal-cat" style="color: #888;"></p>
+            <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        /* ============================================================
+           【設定エリア】以下の内容を自由に書き換えてください
+           ============================================================ */
+        const config = {
+            // お名前
+            name: "hijiriko design",
+            
+            // 肩書き
+            role: "WEB Designer",
+            
+            // 自己紹介文（\n と書くと改行されます）
+            bio: "やわらかさの中に、しっかり伝わる強さを。\nカタチのないイメージを言葉と構成で整理し、\n伝わるデザインとしてお届けします",
+
+            // 【新規】自由記述エリア設定
+            // ここに入力した内容が、ヘッダーと画像一覧の間に表示されます
+            freeText: {
+                title: "Concept",
+                content: "こんにちは。hijiriko designのひじりこです。\n\n音大卒業後、広告音楽制作の現場で約15年間、\n制作やディレクションに関わってきました。\nラジオ番組やナレーション収録、選曲、楽曲制作などの経験から、\n抽象的なイメージを聞き取り、言葉にし、形にしていくことの楽しさを学びました。\n現在はその経験をWebデザインにも活かしています。\n\nまたピアノ講師としての経験や、母としての視点も合わせ\nナチュラル・キッズ・ファミリー向け、女性向けの\n“やさしい世界観”づくりを得意としています。\n\n「伝えたい気持ちはあるけれど、うまく言語化できない」\n「イメージがふんわりしていて形にしづらい」\nそんな方も、どうぞお気軽にご相談ください。\n\n想いを丁寧に汲み取り、やさしく形にしてお届けします。"
+            },
+            
+            // 【作品リスト】
+            // 画像ファイルは "image/image1.jpg", "image/image2.jpg"... のように
+            // 連番で保存してください。画像ファイルが存在しない項目は
+            // 自動的に画面から非表示になります。
+            works: [
+                { title: "Work 01", category: "HP" },
+                { title: "Work 02", category: "banner" },
+                { title: "Work 03", category: "banner" },
+                { title: "Work 04", category: "banner" },
+                { title: "Work 05", category: "banner" },
+                { title: "Work 06", category: "banner" },
+                { title: "Work 07", category: "Daily" },
+                { title: "Work 08", category: "Travel" },
+                { title: "Work 09", category: "Light" },
+                { title: "Work 10", category: "Green" },
+                { title: "Work 11", category: "Wood" },
+                { title: "Work 12", category: "Stone" },
+                { title: "Work 13", category: "Water" },
+                { title: "Work 14", category: "Sky" },
+                { title: "Work 15", category: "Wind" },
+                { title: "Work 16", category: "Flower" },
+                { title: "Work 17", category: "Book" },
+                { title: "Work 18", category: "Music" }
+            ],
+            
+            // 【リンク設定】
+            links: [
+                { label: "Instagram", url: "#" },
+                { label: "X (Twitter)", url: "#" },
+                { label: "Email", url: "mailto:hijirikodesign@gmail.com" }
+            ]
+        };
+
+        // ============================================================
+        //  ここから下は変更しなくて大丈夫です（サイトの動作プログラム）
+        // ============================================================
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // 基本情報の反映
+            document.getElementById('user-name').textContent = config.name;
+            document.getElementById('user-role').textContent = config.role;
+            document.getElementById('user-bio').innerHTML = config.bio.replace(/\n/g, '<br>');
+            
+            // 【新規】フリーテキストエリアの反映
+            const textSection = document.getElementById('free-text-area');
+            if (config.freeText && (config.freeText.title || config.freeText.content)) {
+                document.getElementById('free-text-title').textContent = config.freeText.title || "";
+                document.getElementById('free-text-content').innerHTML = config.freeText.content ? config.freeText.content.replace(/\n/g, '<br>') : "";
+            } else {
+                textSection.style.display = 'none'; // 設定がなければ非表示
+            }
+
+            document.getElementById('footer-name').textContent = config.name; // フッターにも名前を反映
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            // スクロール時のアニメーション設定（IntersectionObserver）
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // ギャラリー生成（【修正】読み込み判定ロジック）
+            const grid = document.getElementById('gallery-grid');
+            const maxItems = config.works.length;
+
+            for (let i = 0; i < maxItems; i++) {
+                const work = config.works[i];
+                // 画像ファイルパスの生成
+                const imagePath = `image/image${i + 1}.jpg`;
+
+                // 【修正ポイント】
+                // 画像を裏側で読み込みテストを行い、成功した場合のみDOMに追加する。
+                // これにより「読み込めない画像」の空枠が一瞬表示されるのを防ぎます。
+                const imgObj = new Image();
+                imgObj.src = imagePath;
+
+                imgObj.onload = function() {
+                    // 読み込み成功時のみ実行
+                    const div = document.createElement('div');
+                    div.className = 'card';
+                    
+                    div.innerHTML = `
+                        <img src="${imagePath}" class="card-img" loading="lazy" alt="${work.title}">
+                        <div class="card-info">
+                            <div class="card-title">${work.title}</div>
+                            <div class="card-cat">${work.category}</div>
+                        </div>
+                    `;
+                    
+                    div.onclick = () => openModal(imagePath, work);
+                    grid.appendChild(div);
+
+                    // 追加したカードに対して即座にアニメーション監視を開始
+                    observer.observe(div);
+                };
+
+                imgObj.onerror = function() {
+                    // 読み込み失敗時は何もしない（画面に追加しない）
+                };
+            }
+            
+            // ソーシャルリンク生成
+            const linkList = document.getElementById('links-list');
+            config.links.forEach(link => {
+                const a = document.createElement('a');
+                a.href = link.url;
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+                a.textContent = link.label;
+                linkList.appendChild(a);
+            });
+        });
+
+        // モーダル操作関数
+        const modal = document.getElementById('modal');
+        function openModal(imgSrc, work) {
+            document.getElementById('modal-img').src = imgSrc;
+            document.getElementById('modal-title').textContent = work.title;
+            document.getElementById('modal-cat').textContent = work.category;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() { 
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    </script>
+</body>
+</html>
